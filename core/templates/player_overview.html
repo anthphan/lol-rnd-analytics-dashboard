@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Player Overview</title>
+  </head>
+  <body>
+    <h1>Player Overview</h1>
+
+    <ul>
+      {% for row in data %}
+      <li>{{ row.player.summoner_name }} - Average Gold: {{ row.avg_gold }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
