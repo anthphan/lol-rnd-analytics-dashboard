@@ -1,0 +1,16 @@
+# Python junk
+__pycache__/
+*.pyc
+
+# Virtual environment (Python sandbox)
+.venv/
+
+# Django stuff
+db.sqlite3
+*.log
+
+# Secrets
+.env
+
+# Mac junk
+.DS_Store
