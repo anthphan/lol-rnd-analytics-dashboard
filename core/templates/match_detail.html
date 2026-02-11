@@ -11,6 +11,14 @@
       Played at {{ match.played_at }}
     </p>
 
+    <h2>VOD</h2>
+    {% if vod %}
+    <p>
+      <a href="{{ vod.url }}" target="_blank"> Open {{ vod.provider }} VOD </a>
+    </p>
+    {% else %}
+    <p>No VOD added yet.</p>
+    {% endif %}
     <h2>Player Stats</h2>
 
     <table border="1">
@@ -43,6 +51,11 @@
       {% for obj in objectives %}
       <li>
         {{ obj.minute }} min - {{ obj.team.name }} took {{ obj.objective_type }}
+        {% if vod and obj.timestamp_seconds %} -
+        <a href="{{ vod.url }}?t={{ obj.timestamp_seconds }}" target="_blank">
+          jump
+        </a>
+        {% endif %}
       </li>
       {% endfor %}
     </ul>
