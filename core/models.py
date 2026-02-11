@@ -74,5 +74,7 @@ class Vod(models.Model):
     provider = models.CharField(max_length=50)
     url = models.URLField()
 
+    game_start_offset_seconds = models.IntegerField(default=0)
+
     def __str__(self):
         return f"{self.provider} VOD for match {self.match_id}"
