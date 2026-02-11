@@ -37,9 +37,21 @@ def match_detail(request, match_id):
     objectives = ObjectiveEvent.objects.filter(match=match).order_by("minute")
     vod = Vod.objects.filter(match=match).first()
 
+    objective_rows = []
+    for obj in objectives:
+        computed = None
+        if vod:
+            computed = vod.game_start_offset_seconds + (obj.minute * 60)
+            
+        jump_seconds = obj.timestamp_seconds if obj.timestamp_seconds else computed
+
+        objective_rows.append({
+            "obj": obj,
+            "jump_seconds": jump_seconds,
+        })
     return render(request, "match_detail.html", {
         "match": match,
         "stats": stats,
-        "objectives": objectives,
         "vod": vod,
+        "objective_rows": objective_rows,
     })

@@ -13,25 +13,18 @@
 
     <h2>VOD</h2>
     {% if vod %}
-    <p>
-      <a href="{{ vod.url }}" target="_blank"> Open {{ vod.provider }} VOD </a>
-    </p>
+      <p>
+        <a href="{{ vod.url }}" target="_blank">Open {{ vod.provider }} VOD</a>
+      </p>
     {% else %}
-    <p>No VOD added yet.</p>
+      <p>No VOD added yet.</p>
     {% endif %}
-    <h2>Player Stats</h2>
 
+    <h2>Player Stats</h2>
     <table border="1">
       <tr>
-        <th>Player</th>
-        <th>Champion</th>
-        <th>K</th>
-        <th>D</th>
-        <th>A</th>
-        <th>CS</th>
-        <th>Gold</th>
+        <th>Player</th><th>Champion</th><th>K</th><th>D</th><th>A</th><th>CS</th><th>Gold</th>
       </tr>
-
       {% for row in stats %}
       <tr>
         <td>{{ row.player.summoner_name }}</td>
@@ -46,17 +39,12 @@
     </table>
 
     <h2>Objectives</h2>
-
     <ul>
-      {% for obj in objectives %}
-      <li>
-        {{ obj.minute }} min - {{ obj.team.name }} took {{ obj.objective_type }}
-        {% if vod and obj.timestamp_seconds %} -
-        <a href="{{ vod.url }}?t={{ obj.timestamp_seconds }}" target="_blank">
-          jump
-        </a>
-        {% endif %}
-      </li>
+      {% for row in objective_rows %}
+        <li>
+          {{ row.obj.minute }} min — {{ row.obj.team.name }} took {{ row.obj.get_objective_type_display }}
+          {% if vod and row.jump_seconds %} — <a href="{{ vod.url }}?t={{ row.jump_seconds }}" target="_blank">jump</a>{% endif %}
+        </li>
       {% endfor %}
     </ul>
   </body>
