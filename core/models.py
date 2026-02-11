@@ -36,10 +36,33 @@ class PlayerMatchStats(models.Model):
 
     kills = models.IntegerField()
     deaths = models.IntegerField()
-    assits = models.IntegerField()
+    assists = models.IntegerField()
 
     cs = models.IntegerField()
     gold = models.IntegerField()
 
     def __str__(self):
         return f"{self.player} in match {self.match}"
+
+
+class ObjectiveEvent(models.Model):
+    OBJECTIVE_CHOICES = [
+        ("dragon", "Dragon"),
+        ("baron", "Baron"),
+        ("tower", "Tower"),
+        ("grubs", "Void Grubs"),
+        ("herald", "Herald"),
+    ]
+
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+    objective_type = models.CharField(
+        max_length=20,
+        choices=OBJECTIVE_CHOICES
+    )
+
+    minute = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.objective_type} at {self.minute} min"
