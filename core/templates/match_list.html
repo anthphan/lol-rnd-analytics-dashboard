@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Matches</title>
+  </head>
+  <body>
+    <h1>Matches</h1>
+
+    <ul>
+      {% for match in matches %}
+        <li>
+          <a href="/matches/{{ match.id }}">
+            Patch {{ match.patch }} - {{ match.played_at }}
+        </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

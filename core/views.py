@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Player, PlayerMatchStats
+from .models import Player, PlayerMatchStats, Match, ObjectiveEvent
 from django.db.models import Avg
 
 
@@ -20,4 +20,24 @@ def player_overview(request):
         return render(request, "player_overview.html", {
             "data": data
         })
-# Create your views here.
+
+
+def match_list(request):
+    matches = Match.objects.all().order_by("-played_at")
+
+    return render(request, "match_list.html", {
+        "matches": matches
+    })
+
+
+def match_detail(request, match_id):
+    match = Match.objects.get(id=match_id)
+
+    stats = PlayerMatchStats.objects.filter(match=match)
+    objectives = ObjectiveEvent.objects.filter(match=match).order_by("minute")
+
+    return render(request, "match_detail.html", {
+        "match": match,
+        "stats": stats,
+        "objectives": objectives,
+    })
