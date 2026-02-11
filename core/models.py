@@ -63,6 +63,16 @@ class ObjectiveEvent(models.Model):
     )
 
     minute = models.IntegerField()
+    timestamp_seconds = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.objective_type} at {self.minute} min"
+
+
+class Vod(models.Model):
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    provider = models.CharField(max_length=50)
+    url = models.URLField()
+
+    def __str__(self):
+        return f"{self.provider} VOD for match {self.match_id}"
