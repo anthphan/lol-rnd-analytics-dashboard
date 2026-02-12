@@ -21,11 +21,13 @@ class Player(models.Model):
 
 
 class Match(models.Model):
+    external_id = models.CharField(max_length=100, unique=True, null=True, blank=True)
     patch = models.CharField(max_length=20)
     played_at = models.DateTimeField()
+    duration_minutes = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f"Patch {self.patch} @ {self.played_at}"
+        return f"{self.external_id} (Patch {self.patch})"
 
 
 class PlayerMatchStats(models.Model):
@@ -38,8 +40,8 @@ class PlayerMatchStats(models.Model):
     deaths = models.IntegerField()
     assists = models.IntegerField()
 
-    cs = models.IntegerField()
-    gold = models.IntegerField()
+    cs = models.IntegerField(null=True, blank=True)
+    gold = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.player} in match {self.match}"
