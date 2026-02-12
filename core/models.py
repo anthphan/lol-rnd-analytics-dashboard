@@ -78,3 +78,24 @@ class Vod(models.Model):
 
     def __str__(self):
         return f"{self.provider} VOD for match {self.match_id}"
+
+class TeamMatchSummary(models.Model):
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+    side = models.CharField(max_length=10)
+
+    bans_1 = models.CharField(max_length=50, blank=True, default="")
+    bans_2 = models.CharField(max_length=50, blank=True, default="")
+    bans_3 = models.CharField(max_length=50, blank=True, default="")
+    bans_4 = models.CharField(max_length=50, blank=True, default="")
+    bans_5 = models.CharField(max_length=50, blank=True, default="")
+
+    gold_k = models.FloatField(null=True, blank=True)
+    team_kills = models.IntegerField(null=True, blank=True)
+    towers = models.IntegerField(null=True, blank=True)
+
+    objectives_shorthand = models.CharField(max_length=200, blank=True, default="")
+
+    def __str__(self):
+        return f"{self.team.name} ({self.side}) summary for match {self.match_id}"
