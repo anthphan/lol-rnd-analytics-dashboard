@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Player, PlayerMatchStats, Match, ObjectiveEvent, Vod
+from .models import Player, PlayerMatchStats, Match, ObjectiveEvent, Vod, TeamMatchSummary
 from django.db.models import Avg
 
 
@@ -36,6 +36,7 @@ def match_detail(request, match_id):
     stats = PlayerMatchStats.objects.filter(match=match)
     objectives = ObjectiveEvent.objects.filter(match=match).order_by("minute")
     vod = Vod.objects.filter(match=match).first()
+    team_summaries = TeamMatchSummary.objects.filter(match=match)
 
     objective_rows = []
     for obj in objectives:
@@ -54,4 +55,5 @@ def match_detail(request, match_id):
         "stats": stats,
         "vod": vod,
         "objective_rows": objective_rows,
+        "team_summaries": team_summaries,
     })

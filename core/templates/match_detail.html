@@ -20,6 +20,35 @@
       <p>No VOD added yet.</p>
     {% endif %}
 
+    <h2>Team Summary</h2>
+
+    {% if team_summaries %}
+      <table border="1">
+        <tr>
+          <th>Team</th>
+          <th>Side</th>
+          <th>Bans</th>
+          <th>Gold (k)</th>
+          <th>Kills</th>
+          <th>Towers</th>
+          <th>Objectives</th>
+        </tr>
+        {% for s in team_summaries %}
+          <tr>
+            <td>{{ s.team.name }}</td>
+            <td>{{ s.side }}</td>
+            <td>{{ s.bans_1 }}, {{ s.bans_2 }}, {{ s.bans_3 }}, {{ s.bans_4 }}, {{ s.bans_5 }}</td>
+            <td>{{ s.gold_k }}</td>
+            <td>{{ s.team_kills }}</td>
+            <td>{{ s.towers }}</td>
+            <td>{{ s.objectives_shorthand }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+      <p>No team summary data yet.</p>
+    {% endif %}
+
     <h2>Player Stats</h2>
     <table border="1">
       <tr>
