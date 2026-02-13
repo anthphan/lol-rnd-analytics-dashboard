@@ -1,3 +1,5 @@
+{% load replace_filters %}
+
 <!doctype html>
 <html>
   <head>
@@ -6,6 +8,8 @@
   <body>
     <h1>Match Detail</h1>
 
+    <h2> {{ match.external_id|underscore_to_space }}
+
     <p>
       Patch {{ match.patch }}<br />
       Played at {{ match.played_at }}
@@ -13,67 +17,114 @@
 
     <h2>VOD</h2>
     {% if vod %}
-      <p>
-        <a href="{{ vod.url }}" target="_blank">Open {{ vod.provider }} VOD</a>
-      </p>
+    <p>
+      <a href="{{ vod.url }}" target="_blank">Open {{ vod.provider }} VOD</a>
+    </p>
     {% else %}
-      <p>No VOD added yet.</p>
+    <p>No VOD added yet.</p>
     {% endif %}
 
     <h2>Team Summary</h2>
 
     {% if team_summaries %}
-      <table border="1">
-        <tr>
-          <th>Team</th>
-          <th>Side</th>
-          <th>Bans</th>
-          <th>Gold (k)</th>
-          <th>Kills</th>
-          <th>Towers</th>
-          <th>Objectives</th>
-        </tr>
-        {% for s in team_summaries %}
-          <tr>
-            <td>{{ s.team.name }}</td>
-            <td>{{ s.side }}</td>
-            <td>{{ s.bans_1 }}, {{ s.bans_2 }}, {{ s.bans_3 }}, {{ s.bans_4 }}, {{ s.bans_5 }}</td>
-            <td>{{ s.gold_k }}</td>
-            <td>{{ s.team_kills }}</td>
-            <td>{{ s.towers }}</td>
-            <td>{{ s.objectives_shorthand }}</td>
-          </tr>
-        {% endfor %}
-      </table>
-      {% else %}
-      <p>No team summary data yet.</p>
-    {% endif %}
-
-    <h2>Player Stats</h2>
     <table border="1">
       <tr>
-        <th>Player</th><th>Champion</th><th>K</th><th>D</th><th>A</th><th>CS</th><th>Gold</th>
+        <th>Team</th>
+        <th>Side</th>
+        <th>Bans</th>
+        <th>Gold (k)</th>
+        <th>Kills</th>
+        <th>Towers</th>
+        <th>Objectives</th>
       </tr>
-      {% for row in stats %}
+      {% for s in team_summaries %}
       <tr>
-        <td>{{ row.player.summoner_name }}</td>
-        <td>{{ row.champion }}</td>
-        <td>{{ row.kills }}</td>
-        <td>{{ row.deaths }}</td>
-        <td>{{ row.assists }}</td>
-        <td>{{ row.cs }}</td>
-        <td>{{ row.gold }}</td>
+        <td>{{ s.team.name }}</td>
+        <td>{{ s.side }}</td>
+        <td>
+          {{ s.bans_1 }}, {{ s.bans_2 }}, {{ s.bans_3 }}, {{ s.bans_4 }}, {{s.bans_5 }}
+        </td>
+        <td>{{ s.gold_k }}</td>
+        <td>{{ s.team_kills }}</td>
+        <td>{{ s.towers }}</td>
+        <td>{{ s.objectives_shorthand }}</td>
       </tr>
       {% endfor %}
     </table>
+    {% else %}
+    <p>No team summary data yet.</p>
+    {% endif %}
+
+    <h2>Player Matchup</h2>
+
+    {% if team_left and team_right %}
+    <h3>
+      {{ team_left }} {{ team_totals.team_left }} vs {{ team_totals.team_right }} {{ team_right }}
+    </h3>
+
+    <table border="1">
+      <tr>
+        <th>{{ team_left }}</th>
+        <th>K-D-A</th>
+        <th>CS</th>
+        <th>Gold</th>
+        <th>Role</th>
+        <th>Gold</th>
+        <th>CS</th>
+        <th>K-D-A</th>
+        <th>{{ team_right }}</th>
+      </tr>
+
+      {% for row in paired_rows %}
+      <tr>
+        <td>
+          {% if row.left %} {{ row.left.player.summoner_name }} ({{ row.left.champion }}) {% endif %}
+        </td>
+
+        <td>
+          {% if row.left %} {{ row.left.kills }}-{{ row.left.deaths }}-{{ row.left.assists }} {% endif %}
+        </td>
+
+        <td>
+          {% if row.left %} {{ row.left.cs }} {% endif %}
+        </td>
+
+        <td>
+          {% if row.left %} {{ row.left.gold }} {% endif %}
+        </td>
+
+        <td>{{ row.role }}</td>
+
+        <td>
+          {% if row.right %} {{ row.right.gold }} {% endif %}
+        </td>
+
+        <td>
+          {% if row.right %} {{ row.right.cs }} {% endif %}
+        </td>
+
+        <td>
+          {% if row.right %} {{ row.right.kills }}-{{ row.right.deaths }}-{{ row.right.assists }} {% endif %}
+        </td>
+
+        <td>
+          {% if row.right %} {{ row.right.player.summoner_name }} ({{ row.right.champion }}) {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
 
     <h2>Objectives</h2>
     <ul>
       {% for row in objective_rows %}
-        <li>
-          {{ row.obj.minute }} min — {{ row.obj.team.name }} took {{ row.obj.get_objective_type_display }}
-          {% if vod and row.jump_seconds %} — <a href="{{ vod.url }}?t={{ row.jump_seconds }}" target="_blank">jump</a>{% endif %}
-        </li>
+      <li>
+        {{ row.obj.minute }} min — {{ row.obj.team.name }} took {{
+        row.obj.get_objective_type_display }} {% if vod and row.jump_seconds %}
+        —
+        <a href="{{ vod.url }}?t={{ row.jump_seconds }}" target="_blank">jump</a
+        >{% endif %}
+      </li>
       {% endfor %}
     </ul>
   </body>

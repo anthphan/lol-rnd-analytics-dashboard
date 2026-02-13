@@ -1,0 +1,13 @@
+match_external_id,row_type,team,side,player_name,role,champion,kills,deaths,assists,cs,gold,bans_1,bans_2,bans_3,bans_4,bans_5,gold_k,team_kills,towers,objectives_shorthand
+DK_T1_2026_LCKCUP_G1,team,DK,blue,,,,,,,,,jayce,bard,nocturne,sivir,kaisa,58.2,11,1,H2
+DK_T1_2026_LCKCUP_G1,team,T1,red,,,,,,,,,malphite,varus,vi,yunara,nami,72.0,21,10,"I1 C3 CT4 CT5 B6"
+DK_T1_2026_LCKCUP_G1,player,DK,blue,Siwoo,TOP,rumble,3,6,2,274,11669,,,,,,,,,
+DK_T1_2026_LCKCUP_G1,player,DK,blue,Lucid,JNG,xinzhao,2,5,5,238,11850,,,,,,,,,
+DK_T1_2026_LCKCUP_G1,player,DK,blue,ShowMaker,MID,orianna,3,4,3,308,13010,,,,,,,,,
+DK_T1_2026_LCKCUP_G1,player,DK,blue,Smash,BOT,ezreal,3,3,5,327,13858,,,,,,,,,
+DK_T1_2026_LCKCUP_G1,player,DK,blue,Career,SUP,karma,0,3,9,38,7837,,,,,,,,,
+DK_T1_2026_LCKCUP_G1,player,T1,red,Doran,TOP,ambessa,3,1,8,316,14331,,,,,,,,,
+DK_T1_2026_LCKCUP_G1,player,T1,red,Oner,JNG,jarvaniv,5,4,11,228,14068,,,,,,,,,
+DK_T1_2026_LCKCUP_G1,player,T1,red,Faker,MID,azir,4,2,6,337,15185,,,,,,,,,
+DK_T1_2026_LCKCUP_G1,player,T1,red,Peyz,BOT,jhin,9,0,4,357,19004,,,,,,,,,
+DK_T1_2026_LCKCUP_G1,player,T1,red,Keria,SUP,neeko,0,4,13,38,9423,,,,,,,,,
